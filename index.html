@@ -1,0 +1,111 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  
+
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+  </head>
+  <body>
+    <div class="container py-5">
+    <h2><strong>Notificaciones de twitch por Discord.</strong>   </h2>
+   
+   <br />
+      <p>  
+        <strong>1era Parte: </strong>Enviar la notificaci&oacute;n a Discord, esto incluye ver como se manda un mensaje, testearlo y mandarlo a un canal de Discord.</p>
+        
+        <p><strong>2da Parte: </strong>Tomar la informaci&oacute;n de un canal X, si est&aacute; Live mostrarlo.</p>
+        
+        <p><strong>3era Parte: </strong>Juntarlo, Si el script encuentra que el Canal X est&aacute; Live procede a enviar la notificaci&oacute;n a Dicord con mensaje de X est&aacute; Live.<br />
+        </p><hr>
+        
+        <p><strong>Obtener de un canal de twitch si est&aacute; live de alguna forma.</strong></p>
+        
+        <ul>
+            <li><strong>Opciones:</strong>
+        
+            <ul>
+                <li>&nbsp;&nbsp; &nbsp;Web scraping, traes todo el HTML de un canal, y buscas algun tag o algo que diga live o te marque eso (por supuesto para esto primero ves a ojo el HTML y buscas eso, luego buscas como obtenerlo)</li>
+                <li>&nbsp;&nbsp; &nbsp;Twitch api: tenes que leer la documentaci&oacute;n brevemente y seguramente generar unas credenciales, y ver el metodo para obtener. en teor&iacute;a esta es lo mas clean. (pero puede ser un poco mas complicado)</li>
+                <li>&nbsp;&nbsp; &nbsp;Opciones de terceros, alg&uacute;n bot ya existen o alguna pagina que lo provea mas facil.&nbsp;</li>
+            </ul>
+            </li>
+        </ul>
+        
+        <p><strong>Pasos:</strong></p>
+        
+        <ol>
+            <li>&nbsp; &nbsp; Traer informaci&oacute;n del canal.<span style="display:none">&nbsp;</span></li>
+            <li>&nbsp;&nbsp; &nbsp;Una vez que se tiene la info de un canal, hacer una funci&oacute;n llamada &quot;<strong>isLiveChannel</strong>()&quot; donde recibe el nombre del canal y devuelve True si est&aacute; Live, o false si no.</li>
+            <li>&nbsp;&nbsp; &nbsp;Hacer una funci&oacute;n llamada <strong>sendNotification</strong>() que recibe el nombre del canal y envia el mensaje por Webhook a discrod.</li>
+            <li>&nbsp;&nbsp; &nbsp;Hacer un for que pueda recorrer una lista de canales a setear en la cual llamar&iacute;a a la funcion &quot;<strong>isLiveChannel</strong>()&quot; con cada nombre de canal y si es True llama a <strong>sendNotification</strong>() con el canal.</li>
+        </ol>
+        
+        <p><strong>Crear un canal en Discord</strong></p>
+        
+        <ol>
+            <li>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;Crear un webhook (es como un endpoint(url) que siempre que mandes un POST(<strong>*1</strong>) ah&iacute;, va a mandar un mensaje)</li>
+            <li>&nbsp; &nbsp; &nbsp; Mandar un mensaje cualquiera a Discord al channel elegido, si funciona hay que formatear el mensaje en como quedar&iacute;a la notificaci&oacute;n para discord onda &quot;NAME est&aacute; en VIVO&quot;.</li>
+            <li>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;Encapsular todo esto en una funcion llamada sendNotification() donde le pasas el nombre del canal y dentro hace todo el proceso para enviar la notificaci&oacute;n al discord.</li>
+        </ol>
+        
+        <p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;</p>
+        
+        <p><br />
+        <strong>(*1)Nota</strong>: no es necesario pero podes ver metodos GET POST o buscar info, pero basicamente no es necesario verlo ahora.<br />
+        &nbsp;&nbsp; &nbsp;Solo los primero 2:25 mins https://www.youtube.com/watch?v=-MTSQjw5DrM<br />
+        &nbsp;&nbsp; &nbsp;o ver otros videos o te quito las dudas si tenes.</p>
+        
+        <p>&nbsp;</p>
+        
+    
+        <hr>
+        <p class="h5">Ejemplo de estructura en python</p> <br>
+
+
+
+
+
+    <pre><code class="python">channels = ['xQc', 'ibai', 'Pokimane', 'Nintendo']
+
+# retorna True si el channel pasado está en vivo
+def isLiveChannel(channel):
+    #do scrap
+    if channel == 'Nintendo':
+        return False #ejemplo de ch offline
+    return True
+
+# Envia el mensaje a Discord
+def sendNotification(ch):
+    #envia mensaje a discor por el webhook
+    print(ch + ' esta en vivo.')
+
+# Recorre todos los canales declarados, verifica si estan live y luego envia notificación
+for ch in channels:
+    if isLiveChannel(ch) == True:
+        sendNotification(ch)</code></pre>
+    </div>
+  </body>
+  <style>
+    code {
+        font-family: monospace !important;
+        font-size: .875em  !important;
+    }
+
+
+   
+    .hljs {
+        display: block !important;
+        overflow-x: auto !important;
+        padding: 0.5em !important;
+        background: #f0f0f0 !important;
+    }
+     
+  </style>
+  
